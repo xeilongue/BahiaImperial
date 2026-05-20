@@ -27,7 +27,7 @@
         //    this.Type = Type;
         //    this.Amount = Amount;
 
-        //    this.AccountId = AccountId;
+        //    this.AccountId = AccountId; .
         //}
     }
 }
