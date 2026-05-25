@@ -19,8 +19,6 @@ namespace BahiaImperial_API.Services.UserServ
 
         public async Task Criar(ClientDTO clientDTO)
         {
-            //if (userDTO.AnoPublicado > DateTime.Now.Year)
-            //    throw new Exception("Não é possivel publicar livros do futuro");
 
             var client = new Client
             {

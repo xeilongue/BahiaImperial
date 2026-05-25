@@ -22,9 +22,6 @@ namespace BahiaImperial_API.Services.AccountServ
 
         public async Task Criar(AccountDTO accountDTO)
         {
-            //if (userDTO.AnoPublicado > DateTime.Now.Year)
-            //    throw new Exception("Não é possivel publicar livros do futuro");
-
             //if ()
             //var account = new Account
             //{

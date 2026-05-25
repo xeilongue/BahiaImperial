@@ -57,6 +57,26 @@ namespace BahiaImperial_API.Services.UserServ
             await _repository.Create(user);
         }
 
+        public async Task Delete(String userId)
+        {
+            User user = await _repository.GetById(userId);
+
+            if (user != null) await _repository.Delete(user);
+            else throw new Exception("Usuário não encontrado");
+        }
+
+        public async Task Update(UserDTO userDTO)
+        {
+            User user = await _repository.GetById(userDTO.Cpf_Cnpj);
+
+            if (user != null)
+            {
+                user.Password = userDTO.Password;
+                await _repository.Delete(user);
+            }
+            else throw new Exception("Usuário não encontrado");
+        }
+
         public async Task<UserDTO> GetById(String userId)
         {
             User user = await _repository.GetById(userId);
