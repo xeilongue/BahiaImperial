@@ -22,16 +22,16 @@ namespace BahiaImperial_API.Services.AccountServ
 
         public async Task Criar(AccountDTO accountDTO)
         {
-            //if ()
-            //var account = new Account
-            //{
-            //    LoanLimit = accountDTO.LoanLimit
+            Account account;
 
-            //};
+            switch (accountDTO.Type)
+            {
+                case AccountDTO.AccountType.business:
+                    account = new Business;
+                    break;
+                
+            }
 
-            //await _repository.Adicionar(account);
-
-            // NÃO DÁ PARA CRIAR UMA CLASSE ABSTRATA
         }
     }
 }
