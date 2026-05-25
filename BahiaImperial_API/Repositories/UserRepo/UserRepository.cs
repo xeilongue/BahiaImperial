@@ -13,14 +13,26 @@ namespace BahiaImperial_API.Repositories.UserRepo
             _context = context;
         }
 
-        public async Task<IEnumerable<User>> ListarTodos()
+        public async Task<IEnumerable<User>> ListAll()
         {
             return await _context.users.ToListAsync();
         }
 
-        public async Task Adicionar(User user)
+        public async Task Create(User user)
         {
             await _context.users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(User user)
+        {
+            _context.users.Update(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(User user)
+        {
+            _context.users.Remove(user);
             await _context.SaveChangesAsync();
         }
 

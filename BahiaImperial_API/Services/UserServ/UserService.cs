@@ -14,7 +14,7 @@ namespace BahiaImperial_API.Services.UserServ
         }
 
         public async Task<IEnumerable<User>> ListarTodos() =>
-            await _repository.ListarTodos();
+            await _repository.ListAll();
 
         public async Task Criar(UserDTO userDTO)
         {
@@ -54,7 +54,7 @@ namespace BahiaImperial_API.Services.UserServ
                 Password = userDTO.Password,
             };
 
-            await _repository.Adicionar(user);
+            await _repository.Create(user);
         }
 
         public async Task<UserDTO> GetById(String userId)

@@ -4,7 +4,9 @@ namespace BahiaImperial_API.Repositories.ClientRepo
 {
     public interface IClientRepository
     {
-        Task<IEnumerable<Client>> ListarTodos();
-        Task Adicionar(Client client);
+        Task<IEnumerable<Client>> ListAll();
+        Task Create(Client client);
+        Task Update(Client client);
+        Task Delete(Client client);
     }
 }

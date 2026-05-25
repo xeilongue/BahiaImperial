@@ -13,12 +13,12 @@ namespace BahiaImperial_API.Repositories.AccountRepo
             _context = context;
         }
 
-        public async Task<IEnumerable<Account>> ListarTodos()
+        public async Task<IEnumerable<Account>> ListAll()
         {
             return await _context.accounts.ToListAsync();
         }
 
-        public async Task Adicionar(Account account)
+        public async Task Create(Account account)
         {
             await _context.accounts.AddAsync(account);
             await _context.SaveChangesAsync();

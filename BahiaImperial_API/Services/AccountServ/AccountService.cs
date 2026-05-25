@@ -18,7 +18,7 @@ namespace BahiaImperial_API.Services.AccountServ
         }
 
         public async Task<IEnumerable<Account>> ListarTodos() =>
-            await _repository.ListarTodos();
+            await _repository.ListAll();
 
         public async Task Criar(AccountDTO accountDTO)
         {

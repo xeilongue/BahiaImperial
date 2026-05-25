@@ -15,7 +15,7 @@ namespace BahiaImperial_API.Services.UserServ
         }
 
         public async Task<IEnumerable<Client>> ListarTodos() =>
-            await _repository.ListarTodos();
+            await _repository.ListAll();
 
         public async Task Criar(ClientDTO clientDTO)
         {
@@ -29,7 +29,7 @@ namespace BahiaImperial_API.Services.UserServ
                 MonthlyIncome = clientDTO.MonthlyIncome,
             };
 
-            await _repository.Adicionar(client);
+            await _repository.Create(client);
         }
     }
 }

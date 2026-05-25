@@ -36,7 +36,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connecti
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IBankTransactionRepository, BankTransactionRepository>();
 
 // REGISTRO DO SERVICES
 builder.Services.AddScoped<IUserService, UserService>();

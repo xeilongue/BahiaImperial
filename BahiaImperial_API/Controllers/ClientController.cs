@@ -18,7 +18,7 @@ namespace BahiaImperial_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get() => Ok(await _repository.ListarTodos());
+        public async Task<IActionResult> Get() => Ok(await _repository.ListAll());
 
     }
 

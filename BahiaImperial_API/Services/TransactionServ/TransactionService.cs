@@ -9,15 +9,15 @@ namespace BahiaImperial_API.Services.TransactionServ
 {
     public class TransactionService : ITransactionService
     {
-        private readonly ITransactionRepository _repository;
+        private readonly IBankTransactionRepository _repository;
 
-        public TransactionService(ITransactionRepository repository)
+        public TransactionService(IBankTransactionRepository repository)
         {
             _repository = repository;
         }
 
         public async Task<IEnumerable<BankTransaction>> ListarTodos() =>
-            await _repository.ListarTodos();
+            await _repository.ListAll();
 
         public async Task Criar(TransactionDTO transactionDTO)
         {
@@ -27,7 +27,7 @@ namespace BahiaImperial_API.Services.TransactionServ
                 Amount = transactionDTO.Amount,
             };
 
-            await _repository.Adicionar(transaction);
+            await _repository.Create(transaction);
         }
     }
 }
