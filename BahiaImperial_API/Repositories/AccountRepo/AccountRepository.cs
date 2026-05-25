@@ -1,4 +1,5 @@
 ﻿using BahiaImperial_API.Data;
+using BahiaImperial_API.Models;
 using BahiaImperial_API.Models.BankAccounts;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,18 @@ namespace BahiaImperial_API.Repositories.AccountRepo
         public async Task Create(Account account)
         {
             await _context.accounts.AddAsync(account);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(Account account)
+        {
+            _context.accounts.Update(account);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(Account account)
+        {
+            _context.accounts.Remove(account);
             await _context.SaveChangesAsync();
         }
     }
