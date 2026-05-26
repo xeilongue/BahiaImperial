@@ -1,10 +1,16 @@
 import { defineConfig } from 'vite';
-import plugin from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [plugin()],
+    plugins: [react()],
     server: {
-        port: 60291,
-    }
+        proxy: {
+            '/BahiaImperial_API': {
+                target: 'http://localhost:5248',
+                changeOrigin: true,
+                secure: false,
+                rewrite: (path) => path.replace(/^\/BahiaImperial_API/, ''),
+            },
+        },
+    },
 })
