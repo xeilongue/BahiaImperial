@@ -28,7 +28,7 @@ namespace BahiaImperial_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserDTO userDTO)
+        public async Task<IActionResult> Post([FromBody] UserDTO userDTO)
         {
             try
             {
