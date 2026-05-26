@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BahiaImperial_API.Data;
-using BahiaImperial_API.Models;
 using BahiaImperial_API.DTOs;
-using BahiaImperial_API.Repositories.UserRepo;
 using BahiaImperial_API.Services.UserServ;
 using Microsoft.AspNetCore.Authorization;
 
