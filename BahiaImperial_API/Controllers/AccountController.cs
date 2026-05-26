@@ -18,14 +18,14 @@ namespace BahiaImperial_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get() => Ok(await _service.ListarTodos());
+        public async Task<IActionResult> Get() => Ok(await _service.ListAll());
 
         [HttpPost]
         public async Task<IActionResult> Post(AccountDTO accountDTO)
         {
             try
             {
-                await _service.Criar(accountDTO);
+                await _service.Create(accountDTO);
                 return Ok("Usuario cadastrado");
             }
             catch (Exception ex)

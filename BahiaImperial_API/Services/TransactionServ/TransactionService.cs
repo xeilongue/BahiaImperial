@@ -16,10 +16,10 @@ namespace BahiaImperial_API.Services.TransactionServ
             _repository = repository;
         }
 
-        public async Task<IEnumerable<BankTransaction>> ListarTodos() =>
+        public async Task<IEnumerable<BankTransaction>> ListAll() =>
             await _repository.ListAll();
 
-        public async Task Criar(TransactionDTO transactionDTO)
+        public async Task Create(TransactionDTO transactionDTO)
         {
             var transaction = new BankTransaction
             {

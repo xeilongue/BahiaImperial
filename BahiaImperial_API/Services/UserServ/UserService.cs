@@ -13,10 +13,10 @@ namespace BahiaImperial_API.Services.UserServ
             _repository = repository;
         }
 
-        public async Task<IEnumerable<User>> ListarTodos() =>
+        public async Task<IEnumerable<User>> ListAll() =>
             await _repository.ListAll();
 
-        public async Task Criar(UserDTO userDTO)
+        public async Task Create(UserDTO userDTO)
         {
             if (userDTO.Cpf_Cnpj == null || userDTO.Cpf_Cnpj.Trim() == "")
             {

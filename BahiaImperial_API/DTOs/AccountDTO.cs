@@ -12,5 +12,7 @@
         public decimal Balance { get; set; } = 0;
         public decimal LoanLimit { get; set; }
         public AccountType Type { get; set; }
+
+        public string Cpf_Cnpj { get; set; }
     }
 }
