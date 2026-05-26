@@ -13,6 +13,7 @@
         public int Id { get; set; }
         public decimal Balance { get; set; } = 0;
         public decimal LoanLimit { get; set; }
+        public decimal LoanDebt { get; set; }
         public AccountType Type { get; set; }
 
         // FOREIGN KEY
@@ -20,15 +21,8 @@
 
         // NAVIGATION
         public ICollection<BankTransaction> Transactions { get; set; } = new List<BankTransaction>();
-        //public ICollection<Loan> Loans { get; set; } = new List<Loan>();
 
         public Account () { }
-
-        //public Account (decimal LoanLimit, string Cpf_Cnpj)
-        //{
-        //    this.LoanLimit = LoanLimit;
-        //    this.Cpf_Cnpj = Cpf_Cnpj;
-        //}
 
     }
 }

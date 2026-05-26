@@ -28,6 +28,11 @@ namespace BahiaImperial_API.Data.Configurations
                 .HasPrecision(15, 2)
                 .ValueGeneratedOnAdd();
 
+            account.Property(a => a.LoanDebt)
+                .HasPrecision(15, 2)
+                .HasDefaultValue(0)
+                .ValueGeneratedOnAdd();
+
             account.Property(a => a.Type)
                 .HasConversion<string>()
                 .HasMaxLength(13)
@@ -42,10 +47,6 @@ namespace BahiaImperial_API.Data.Configurations
             account.HasMany(a => a.Transactions)
                 .WithOne()
                 .HasForeignKey(t => t.AccountId);
-
-            //account.HasMany(a => a.Loans)
-            //    .WithOne()
-            //    .HasForeignKey(l => l.AccountId);
 
         }
     }
