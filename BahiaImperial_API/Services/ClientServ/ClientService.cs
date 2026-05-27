@@ -25,6 +25,7 @@ namespace BahiaImperial_API.Services.UserServ
                 Cpf_Cnpj = clientDTO.Cpf_Cnpj,
                 Name = clientDTO.Name,
                 MonthlyIncome = clientDTO.MonthlyIncome,
+                InceptionDate = clientDTO.InceptionDate
             };
 
             await _repository.Create(client);

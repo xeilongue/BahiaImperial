@@ -28,11 +28,12 @@ namespace BahiaImperial_API.Controllers
             try
             {
                 await _service.Create(clientDTO);
-                return Ok("Cliente cadastrado");
+                return Ok(new { message = "Pessoa cadastrada com sucesso" });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var realErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new { message = realErrorMessage });
             }
         }
     }
