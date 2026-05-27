@@ -1,0 +1,61 @@
+body {
+}
+/* AccountSelection.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&display=swap');
+
+.account-page-container {
+    font-family: 'Inter', sans-serif;
+    background-color: #0b0f19;
+    background-image: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+}
+
+/* Card centralizado e minimalista */
+.account-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #ffffff !important;
+}
+
+/* Item de conta na lista dinâmica */
+.account-card-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 1.2rem;
+    transition: all 0.2s ease-in-out;
+    background-color: #f8fafc;
+    cursor: pointer;
+}
+
+    .account-card-item:hover {
+        border-color: #4f46e5;
+        background-color: rgba(79, 70, 229, 0.02);
+        transform: translateX(4px);
+    }
+
+/* Badge indicando o tipo de conta (Corrente, Poupança...) */
+.account-type-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.375rem;
+    background-color: #e0e7ff;
+    color: #4338ca;
+    display: inline-block;
+}
+
+/* Botão tracejado moderno para criar nova conta */
+.btn-outline-custom {
+    border: 2px dashed #cbd5e1;
+    color: #64748b;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+    .btn-outline-custom:hover {
+        border-color: #4f46e5;
+        color: #4f46e5;
+        background-color: rgba(79, 70, 229, 0.02);
+    }

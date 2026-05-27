@@ -1,17 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router";
+import './Signup.css';
 
 function Signup() {
+
+    const [step, setStep] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [cpfCnpj, setCpfCnpj] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    const [fullName, setFullName] = useState('');
+    const [monthlyIncome, setMonthlyIncome] = useState('');
+    const [inceptionDate, setInceptionDate] = useState('');
+
     const navigate = useNavigate();
-    const apiUrl = 'BahiaImperial_API/api/User';
+    const isCnpj = cpfCnpj.replace(/\D/g, '').length > 11;
+
+    const userApiUrl = 'BahiaImperial_API/api/User';
+    const clientApiUrl = 'BahiaImperial_API/api/Client';
+
+    const handlePrevStep = () => {
+        setStep(1);
+    };
+    const handleNextStep = () => {
+        alert("Você está quase lá! Só mais algumas informações!")
+        setStep(2);
+    };
 
     const handleRegisterUser = async (event: React.FormEvent<HTMLFormElement>) => {
+
         if (event) event.preventDefault();
+        setIsLoading(true);
 
         const newUser = {
             cpf_Cnpj: cpfCnpj,
@@ -19,7 +40,7 @@ function Signup() {
         };
 
         try {
-            const response = await fetch(apiUrl, {
+            const userResponse = await fetch(userApiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,93 +48,233 @@ function Signup() {
                 body: JSON.stringify(newUser)
             });
 
-            // Trata a resposta mesmo se não for um JSON perfeito ou se vier com erro
-            const data = await response.json().catch(() => ({}));
+            const data = await userResponse.json().catch(() => ({}));
 
-            if (response.ok) {
-                alert("Usuário cadastrado com sucesso. Efetue o login!");
-                navigate('/');
-            } else {
+            if (userResponse.ok) {
+                console.log(data.message);
+            }
+            else {
                 alert(data.message || "Erro ao cadastrar usuário.");
+                setIsLoading(false);
+                setCpfCnpj('');
+                setFullName('');
+                setInceptionDate('');
+                setMonthlyIncome('');
+                setStep(1);
+                return;
             }
         } catch (error) {
             alert("Erro de conexão com o servidor.");
             console.error(error);
         }
-    };
+
+        const newClient = {
+            cpf_Cnpj: cpfCnpj,
+            name: fullName,
+            salary: monthlyIncome,
+            inceptionDate: inceptionDate
+        }
+
+        try {
+            const clientResponse = await fetch(clientApiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newClient)
+            });
+
+            const clientData = await clientResponse.json();
+
+            if (clientResponse.ok) {
+                alert("Cadastro realizado com sucesso!");
+                console.log(clientData.message);
+                navigate("/")
+            }
+            else {
+                alert(clientData.message);
+
+                setIsLoading(false);
+
+                await fetch(userApiUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newUser.cpf_Cnpj)
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            setCpfCnpj('');
+            setFullName('');
+            setInceptionDate('');
+            setMonthlyIncome('');
+            setStep(1);
+            return;
+        }
+    }
 
     return (
-        <div className="bg-dark d-flex align-items-center justify-content-center min-vh-100">
+        <div className="auth-page-container d-flex align-items-center justify-content-center min-vh-100 py-5">
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-11 col-sm-8 col-md-6 col-lg-4">
+                    <div className="col-12 col-sm-10 col-md-8 col-lg-5">
 
-                        <form onSubmit={handleRegisterUser} className="bg-white p-4 p-md-5 rounded-4 shadow-lg d-flex flex-column">
+                        <form onSubmit={handleRegisterUser} className="auth-card bg-white p-4 p-sm-5 rounded-4 shadow-sm d-flex flex-column">
 
                             <div className="text-center mb-4">
-                                <h2 className="fw-bold">Cadastro</h2>
+                                <h3 className="fw-bold text-dark mb-2">Criar Conta</h3>
+                                <span className="badge-step">Etapa {step} de 2</span>
                             </div>
 
-                            {/* Campo Usuário (CPF/CNPJ) */}
-                            <div className="mb-3">
-                                <label htmlFor="InputEmailRegister" className="form-label fw-semibold">Usuário</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="InputEmailRegister"
-                                    placeholder="CPF ou CNPJ"
-                                    value={cpfCnpj}
-                                    onChange={(e) => setCpfCnpj(e.target.value)}
-                                    required
-                                />
-                                <div id="emailHelp" className="form-text mt-2">
-                                    Cpf (Pessoa física) / Cnpj (Pessoa Jurídica).
-                                </div>
-                            </div>
+                            {/* ETAPA 1: CREDENCIAIS */}
+                            {step === 1 && (
+                                <>
+                                    {/* Campo Usuário (CPF/CNPJ) */}
+                                    <div className="mb-3">
+                                        <label htmlFor="InputEmailRegister" className="form-label fw-medium text-secondary small">CPF ou CNPJ</label>
+                                        <input
+                                            type="text"
+                                            className="form-control form-control-custom"
+                                            id="InputEmailRegister"
+                                            placeholder="Apenas números"
+                                            maxLength={14}
+                                            value={cpfCnpj}
+                                            onChange={(e) => setCpfCnpj(e.target.value.replace(/\D/g, ''))}
+                                            disabled={isLoading}
+                                            required
+                                        />
+                                    </div>
 
-                            {/* Campo Senha */}
-                            <div className="mb-3">
-                                <label htmlFor="InputPasswordRegister" className="form-label fw-semibold">Senha</label>
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    className="form-control"
-                                    id="InputPasswordRegister"
-                                    placeholder="Crie uma senha"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
+                                    {/* Campo Senha */}
+                                    <div className="mb-3">
+                                        <label htmlFor="InputPasswordRegister" className="form-label fw-medium text-secondary small">Senha</label>
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            className="form-control form-control-custom"
+                                            id="InputPasswordRegister"
+                                            placeholder="Crie uma senha forte"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            disabled={isLoading}
+                                            required
+                                        />
+                                    </div>
 
-                            {/* Switch de Mostrar Senha */}
-                            <div className="form-check form-switch mb-4">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    role="switch"
-                                    id="showPassword"
-                                    checked={showPassword}
-                                    onChange={() => setShowPassword(!showPassword)}
-                                    style={{ cursor: 'pointer' }}
-                                />
-                                <label className="form-check-label small text-muted" htmlFor="showPassword" style={{ cursor: 'pointer' }}>
-                                    Mostrar senha
-                                </label>
-                            </div>
+                                    {/* Switch de Mostrar Senha */}
+                                    <div className="form-check form-switch mb-4 d-flex align-items-center">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            role="switch"
+                                            id="showPassword"
+                                            checked={showPassword}
+                                            onChange={() => setShowPassword(!showPassword)}
+                                            style={{ cursor: 'pointer' }}
+                                        />
+                                        <label className="form-check-label small text-muted ms-2" htmlFor="showPassword" style={{ cursor: 'pointer' }}>
+                                            Mostrar senha
+                                        </label>
+                                    </div>
 
-                            {/* Botão de Envio */}
-                            <div className="d-grid gap-2 mb-4">
-                                <button type="submit" className="btn btn-primary btn-lg shadow-sm">
-                                    Registrar
-                                </button>
-                            </div>
+                                    <div className="d-grid mb-4">
+                                        <button type="button" onClick={handleNextStep} className="btn btn-custom-auth shadow-sm">
+                                            Avançar →
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+
+                            {/* ETAPA 2: DADOS DO PERFIL */}
+                            {step === 2 && (
+                                <>
+                                    <div className="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom">
+                                        <h6 className="mb-0 fw-bold text-dark">
+                                            {isCnpj ? "Dados da Empresa" : "Dados Pessoais"}
+                                        </h6>
+                                        <button
+                                            type="button"
+                                            className="btn btn-sm btn-light border text-secondary"
+                                            onClick={handlePrevStep}
+                                            disabled={isLoading}
+                                            style={{ fontSize: '0.85rem' }}
+                                        >
+                                            ← Voltar
+                                        </button>
+                                    </div>
+
+                                    {/* Campo Nome / Razão Social */}
+                                    <div className="mb-3">
+                                        <label className="form-label fw-medium text-secondary small">
+                                            {isCnpj ? "Razão Social / Nome da Empresa" : "Nome Completo"}
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control form-control-custom"
+                                            placeholder={isCnpj ? "Ex: Bahia Imperial Ltda" : "Ex: João Silva"}
+                                            value={fullName}
+                                            onChange={(e) => setFullName(e.target.value)}
+                                            disabled={isLoading}
+                                            required
+                                        />
+                                    </div>
+
+                                    {/* Campo Renda / Faturamento */}
+                                    <div className="mb-3">
+                                        <label className="form-label fw-medium text-secondary small">
+                                            {isCnpj ? "Faturamento Mensal" : "Renda Mensal"}
+                                        </label>
+                                        <div className="input-group">
+                                            <span className="input-group-text bg-light text-muted border-end-0 px-3" style={{ borderRadius: '0.5rem 0 0 0.5rem', borderColor: '#e2e8f0' }}>R$</span>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                className="form-control form-control-custom border-start-0"
+                                                placeholder="0.00"
+                                                value={monthlyIncome}
+                                                onChange={(e) => setMonthlyIncome(e.target.value)}
+                                                disabled={isLoading}
+                                                required
+                                                style={{ borderRadius: '0 0.5rem 0.5rem 0' }}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Campo Data de Nascimento */}
+                                    <div className="mb-4">
+                                        <label className="form-label fw-medium text-secondary small">
+                                            {isCnpj ? "Data de Abertura / Fundação" : "Data de Nascimento"}
+                                        </label>
+                                        <input
+                                            type="date"
+                                            className="form-control form-control-custom"
+                                            value={inceptionDate}
+                                            onChange={(e) => setInceptionDate(e.target.value)}
+                                            disabled={isLoading}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="d-grid mb-4">
+                                        <button type="submit" className="btn btn-custom-auth shadow-sm" disabled={isLoading}>
+                                            {isLoading ? (
+                                                <div className="d-flex align-items-center justify-content-center">
+                                                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                                    <span>Processando...</span>
+                                                </div>
+                                            ) : 'Concluir Cadastro'}
+                                        </button>
+                                    </div>
+                                </>
+                            )}
 
                             {/* Link para o Login */}
-                            <div className="text-center">
-                                <p className="mb-0 small">
+                            <div className="text-center pt-2 border-top">
+                                <p className="mb-0 small text-muted">
                                     Já possui uma conta?{' '}
-                                    <Link to="/" className="link-danger text-decoration-none fw-bold">
-                                        Login
+                                    <Link to="/" className="auth-link ms-1">
+                                        Fazer Login
                                     </Link>
                                 </p>
                             </div>

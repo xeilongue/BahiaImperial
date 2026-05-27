@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from "react-router";
+import './Login.css';
 
 function Login() {
     const navigate = useNavigate();
@@ -45,41 +46,38 @@ function Login() {
     };
 
     return (
-        <div className="bg-dark d-flex align-items-center justify-content-center min-vh-100">
+        <div className="auth-page-container d-flex align-items-center justify-content-center min-vh-100 py-5">
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-11 col-sm-8 col-md-6 col-lg-4">
+                    <div className="col-12 col-sm-10 col-md-7 col-lg-4">
 
-                        <form onSubmit={handleLogin} className="bg-white p-4 p-md-5 rounded-4 shadow-lg">
+                        <form onSubmit={handleLogin} className="auth-card bg-white p-4 p-sm-5 rounded-4 shadow-sm">
 
                             <div className="text-center mb-4">
-                                <h2 className="fw-bold">Login</h2>
+                                <h3 className="fw-bold text-dark mb-1">Acessar Conta</h3>
+                                <p className="text-muted small">Insira suas credenciais abaixo</p>
                             </div>
 
                             {/* Input de Usuário */}
                             <div className="mb-3">
-                                <label htmlFor="InputEmail" className="form-label fw-semibold">Usuário</label>
+                                <label htmlFor="InputEmail" className="form-label fw-medium text-secondary small">CPF ou CNPJ</label>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control form-control-custom"
                                     id="InputEmail"
-                                    aria-describedby="emailHelp"
-                                    placeholder="CPF ou CNPJ"
+                                    placeholder="000.000.000-00"
                                     value={cpfCnpj}
                                     onChange={(e) => setCpfCnpj(e.target.value)}
                                     required
                                 />
-                                <div id="emailHelp" className="form-text mt-2">
-                                    Cpf (Pessoa física) / Cnpj (Pessoa Jurídica).
-                                </div>
                             </div>
 
                             {/* Input de Senha */}
                             <div className="mb-3">
-                                <label htmlFor="InputPassword" className="form-label fw-semibold">Senha</label>
+                                <label htmlFor="InputPassword" className="form-label fw-medium text-secondary small">Senha</label>
                                 <input
                                     type={showPassword ? 'text' : 'password'}
-                                    className="form-control"
+                                    className="form-control form-control-custom"
                                     id="InputPassword"
                                     placeholder="••••••••"
                                     value={password}
@@ -89,7 +87,7 @@ function Login() {
                             </div>
 
                             {/* Toggle Mostrar Senha */}
-                            <div className="form-check form-switch mb-4">
+                            <div className="form-check form-switch mb-4 d-flex align-items-center">
                                 <input
                                     className="form-check-input"
                                     type="checkbox"
@@ -97,9 +95,10 @@ function Login() {
                                     id="showPassword"
                                     checked={showPassword}
                                     onChange={(e) => setShowPassword(e.target.checked)}
+                                    style={{ cursor: 'pointer' }}
                                 />
                                 <label
-                                    className="form-check-label small text-muted"
+                                    className="form-check-label small text-muted ms-2"
                                     htmlFor="showPassword"
                                     style={{ cursor: 'pointer' }}
                                 >
@@ -108,18 +107,18 @@ function Login() {
                             </div>
 
                             {/* Botão Entrar */}
-                            <div className="d-grid gap-2 mb-4">
-                                <button type="submit" className="btn btn-primary btn-lg shadow-sm">
-                                    Entrar
+                            <div className="d-grid mb-4">
+                                <button type="submit" className="btn btn-custom-auth shadow-sm">
+                                    Entrar na conta
                                 </button>
                             </div>
 
                             {/* Link de Registro */}
-                            <div className="text-center">
-                                <p className="mb-0 small">
+                            <div className="text-center pt-2">
+                                <p className="mb-0 small text-muted">
                                     Não possui uma conta?{' '}
-                                    <Link to="/cadastro" className="link-danger text-decoration-none fw-bold">
-                                        Registre-se
+                                    <Link to="/cadastro" className="auth-link ms-1">
+                                        Criar conta
                                     </Link>
                                 </p>
                             </div>
@@ -131,7 +130,6 @@ function Login() {
             </div>
         </div>
     );
-
-};
+}
 
 export default Login;
