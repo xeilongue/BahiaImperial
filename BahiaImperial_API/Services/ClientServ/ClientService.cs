@@ -19,6 +19,16 @@ namespace BahiaImperial_API.Services.UserServ
 
         public async Task Create(ClientDTO clientDTO)
         {
+            if (clientDTO.InceptionDate > DateOnly.FromDateTime(DateTime.Now) ||
+                clientDTO.InceptionDate < new DateOnly(1906, 01, 01)
+            )
+                throw new Exception("Data de nascimento inválida.");
+
+            if (clientDTO.InceptionDate > DateOnly.FromDateTime((DateTime.Now).AddYears(-18)))
+                throw new Exception("Você deve ser maior de idade para abrir uma conta.");
+
+            if (clientDTO.MonthlyIncome <= 0)
+                throw new Exception("Salário inválido.");
 
             var client = new Client
             {
