@@ -58,6 +58,7 @@ function Signup() {
                 alert(data.message || "Erro ao cadastrar usuário.");
                 setIsLoading(false);
                 setCpfCnpj('');
+                setPassword('');
                 setFullName('');
                 setInceptionDate('');
                 setMonthlyIncome('');
@@ -67,6 +68,7 @@ function Signup() {
         } catch (error) {
             alert("Erro de conexão com o servidor.");
             console.error(error);
+            return;
         }
 
         const newClient = {
@@ -88,7 +90,6 @@ function Signup() {
             const clientData = await clientResponse.json();
 
             if (clientResponse.ok) {
-                alert("Cadastro realizado com sucesso!");
                 console.log(clientData.message);
                 navigate("/")
             }
@@ -104,10 +105,20 @@ function Signup() {
                     },
                     body: JSON.stringify(newUser.cpf_Cnpj)
                 });
+
+                setCpfCnpj('');
+                setPassword('');
+                setFullName('');
+                setInceptionDate('');
+                setMonthlyIncome('');
+                setStep(1);
+                return;
+
             }
         } catch (error) {
             console.error(error);
             setCpfCnpj('');
+            setPassword('');
             setFullName('');
             setInceptionDate('');
             setMonthlyIncome('');
@@ -142,15 +153,18 @@ function Signup() {
                 }
                 else {
                     alert(accountData.message);
+                    return;
                 }
 
             } catch (error) {
                 console.error(error);
                 setCpfCnpj('');
+                setPassword('');
                 setFullName('');
                 setInceptionDate('');
                 setMonthlyIncome('');
                 setStep(1);
+                return;
             }
 
             try {
@@ -173,17 +187,18 @@ function Signup() {
                 const accountData = await accountResponse.json();
 
                 if (accountResponse.ok) {
-                    alert("Conta criada com sucesso");
                     console.log(accountData.message);
                     window.location.reload();
                 }
                 else {
                     alert(accountData.message);
+                    alert("Cadastro realizado com sucesso!");
                 }
 
             } catch (error) {
                 console.error(error);
                 setCpfCnpj('');
+                setPassword('');
                 setFullName('');
                 setInceptionDate('');
                 setMonthlyIncome('');
@@ -214,6 +229,7 @@ function Signup() {
 
                 if (accountResponse.ok) {
                     console.log(accountData.message);
+                    alert("Cadastro realizado com sucesso!");
                 }
                 else {
                     alert(accountData.message);
@@ -222,6 +238,7 @@ function Signup() {
             } catch (error) {
                 console.error(error);
                 setCpfCnpj('');
+                setPassword('');
                 setFullName('');
                 setInceptionDate('');
                 setMonthlyIncome('');

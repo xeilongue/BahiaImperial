@@ -275,21 +275,14 @@ function Dashboard() {
                                 {selectedAccount?.balance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                             </h2>
                         </div>
-                        {selectedAccount && getAccountTypeName(selectedAccount.type as 0 | 1 | 2) !== 'Poupança' && (
-                            <div className="col-12 col-md-6 text-md-end">
-                                <div className="metric-label text-muted small">Limite de Empréstimo</div>
-                                <span className="fw-semibold text-muted">
-                                    {selectedAccount.loanLimit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                                </span>
-                            </div>
-                        )}
+
                     </div>
                 </div>
 
                 <div className="row g-3">
 
                     <div className="col-12 col-md-5">
-                        <div className="dashboard-card bg-white p-3 h-100 shadow-sm rounded-4">
+                        <div className="dashboard-card bg-white p-3 shadow-sm rounded-4 align-self-start"> {/* removeu h-100, adicionou align-self-start */}
                             <h6 className="fw-bold text-dark mb-3">Movimentações</h6>
                             <div className="d-flex flex-column gap-2">
                                 <button

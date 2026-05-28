@@ -6,14 +6,14 @@ interface ProtectedRouteProps {
 }
 
 const isAuthenticated = () => {
-    const token = localStorage.getItem("token");
-    return !(token == null);
+    const token = localStorage.getItem("jwtToken");
+    return token !== null;
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     if (isAuthenticated())
         return <>{children}</>;
-    return <Navigate to="/auth" />;
+    return <Navigate to="/" />;
 }
 
 export default ProtectedRoute;

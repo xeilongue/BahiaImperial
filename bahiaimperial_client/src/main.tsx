@@ -6,7 +6,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-//import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -21,7 +21,8 @@ createRoot(document.getElementById('root')!).render(
 
                 <Route path="/cadastro" element={<Signup />}></Route>
 
-                <Route path="/dashboard" element={<Dashboard />}></Route>
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /> </ProtectedRoute>}></Route>
+
 
             </Routes>
         </BrowserRouter>

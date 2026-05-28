@@ -67,6 +67,7 @@ function Login() {
                                     id="InputEmail"
                                     placeholder="000.000.000-00"
                                     value={cpfCnpj}
+                                    maxLength={14}
                                     onChange={(e) => setCpfCnpj(e.target.value)}
                                     required
                                 />
