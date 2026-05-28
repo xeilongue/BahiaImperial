@@ -30,5 +30,17 @@ namespace BahiaImperial_API.Services.UserServ
 
             await _repository.Create(client);
         }
+
+        public async Task<Client> GetById(String clientId)
+        {
+            Client client = await _repository.GetById(clientId);
+
+            if (client != null)
+            {
+                return client;
+            }
+
+            throw new Exception("Cadastro não encontrado.");
+        }
     }
 }

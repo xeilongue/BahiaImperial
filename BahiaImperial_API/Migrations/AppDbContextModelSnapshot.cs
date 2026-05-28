@@ -86,7 +86,6 @@ namespace BahiaImperial_API.Migrations
 
                     b.Property<DateTime>("TrDate")
                         .ValueGeneratedOnAdd()
-                        .HasPrecision(3)
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 

@@ -35,5 +35,10 @@ namespace BahiaImperial_API.Repositories.ClientRepo
             _context.clients.Remove(client);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Client> GetById(String clientId)
+        {
+            return await _context.clients.FirstOrDefaultAsync(c => c.Cpf_Cnpj == clientId);
+        }
     }
 }

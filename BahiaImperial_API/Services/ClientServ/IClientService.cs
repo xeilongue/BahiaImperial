@@ -7,5 +7,6 @@ namespace BahiaImperial_API.Services.ClientServ
     {
         Task<IEnumerable<Client>> ListAll();
         Task Create(ClientDTO clientDTO);
+        Task<Client> GetById(String clientId);
     }
 }

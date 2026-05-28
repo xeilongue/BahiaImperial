@@ -1,7 +1,6 @@
-﻿using BahiaImperial_API.DTOs;
+﻿// ITransactionService.cs
+using BahiaImperial_API.DTOs;
 using BahiaImperial_API.Models;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BahiaImperial_API.Services.TransactionServ
 {
@@ -9,5 +8,8 @@ namespace BahiaImperial_API.Services.TransactionServ
     {
         Task<IEnumerable<BankTransaction>> ListAll();
         Task Create(TransactionDTO transactionDTO);
+        Task Deposit(int accountId, decimal amount);
+        Task Withdraw(int accountId, decimal amount);
+        Task<IEnumerable<BankTransaction>> GetByAccountId(int accountId);
     }
 }

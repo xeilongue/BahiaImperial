@@ -20,6 +20,7 @@ function Signup() {
 
     const userApiUrl = 'BahiaImperial_API/api/User';
     const clientApiUrl = 'BahiaImperial_API/api/Client';
+    const accountApiUrl = 'BahiaImperial_API/api/Account';
 
     const handlePrevStep = () => {
         setStep(1);
@@ -113,6 +114,121 @@ function Signup() {
             setStep(1);
             return;
         }
+
+        const quant = newClient.cpf_Cnpj.length;
+
+        if (quant == 11) {
+            try {
+                const salaryNumber = parseFloat(monthlyIncome) || 0;
+
+                const newCheckingAccount = {
+                    cpf_Cnpj: cpfCnpj,
+                    type: 1,
+                    loanLimit: salaryNumber * 0.3
+                }
+
+                const accountResponse = await fetch(accountApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newCheckingAccount)
+                });
+
+                const accountData = await accountResponse.json();
+
+                if (accountResponse.ok) {
+                    console.log(accountData.message);
+                }
+                else {
+                    alert(accountData.message);
+                }
+
+            } catch (error) {
+                console.error(error);
+                setCpfCnpj('');
+                setFullName('');
+                setInceptionDate('');
+                setMonthlyIncome('');
+                setStep(1);
+            }
+
+            try {
+                const salaryNumber = parseFloat(monthlyIncome) || 0;
+
+                const newSavingAccount = {
+                    cpf_Cnpj: cpfCnpj,
+                    type: 2,
+                    loanLimit: salaryNumber * 0.3
+                }
+
+                const accountResponse = await fetch(accountApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newSavingAccount)
+                });
+
+                const accountData = await accountResponse.json();
+
+                if (accountResponse.ok) {
+                    alert("Conta criada com sucesso");
+                    console.log(accountData.message);
+                    window.location.reload();
+                }
+                else {
+                    alert(accountData.message);
+                }
+
+            } catch (error) {
+                console.error(error);
+                setCpfCnpj('');
+                setFullName('');
+                setInceptionDate('');
+                setMonthlyIncome('');
+                setStep(1);
+            } finally {
+                setIsLoading(false);
+            }
+        } else {
+
+            try {
+                const salaryNumber = parseFloat(monthlyIncome) || 0;
+
+                const newBusinessAccount = {
+                    cpf_Cnpj: cpfCnpj,
+                    type: 0,
+                    loanLimit: salaryNumber * 0.8
+                }
+
+                const accountResponse = await fetch(accountApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newBusinessAccount)
+                });
+
+                const accountData = await accountResponse.json();
+
+                if (accountResponse.ok) {
+                    console.log(accountData.message);
+                }
+                else {
+                    alert(accountData.message);
+                }
+
+            } catch (error) {
+                console.error(error);
+                setCpfCnpj('');
+                setFullName('');
+                setInceptionDate('');
+                setMonthlyIncome('');
+                setStep(1);
+            }
+        }
+
     }
 
     return (

@@ -10,5 +10,6 @@ namespace BahiaImperial_API.Services.AccountServ
     {
         Task<IEnumerable<Account>> ListAll();
         Task Create(AccountDTO accountDTO);
+        Task<List<AccountDTO>> GetAccountByUserId(string userId);
     }
 }

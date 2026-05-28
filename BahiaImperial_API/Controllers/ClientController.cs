@@ -36,6 +36,19 @@ namespace BahiaImperial_API.Controllers
                 return BadRequest(new { message = realErrorMessage });
             }
         }
+
+        [HttpGet("GetById/{clientId}")]
+        public async Task<IActionResult> Get([FromRoute] String clientId)
+        {
+            try
+            {
+                return Ok(await _service.GetById(clientId));
+            }
+            catch (Exception e)
+            {
+                return NotFound(new { message = e.Message });
+            }
+        }
     }
 
 }

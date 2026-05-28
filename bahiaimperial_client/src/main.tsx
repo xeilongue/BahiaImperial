@@ -10,7 +10,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import AccountSelect from './pages/AccountSelect';
 import Dashboard from './pages/Dashboard';
 
 createRoot(document.getElementById('root')!).render(
@@ -21,8 +20,6 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="/" element={<Login />}></Route>
 
                 <Route path="/cadastro" element={<Signup />}></Route>
-
-                <Route path="/accounts" element={<AccountSelect />}></Route>
 
                 <Route path="/dashboard" element={<Dashboard />}></Route>
 

@@ -1,4 +1,5 @@
-﻿using BahiaImperial_API.Data;
+﻿// BankTransactionRepository.cs
+using BahiaImperial_API.Data;
 using BahiaImperial_API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,14 @@ namespace BahiaImperial_API.Repositories.TransactionRepo
         {
             _context.transactions.Remove(bankTransaction);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<BankTransaction>> GetByAccountId(int accountId) // NOVO
+        {
+            return await _context.transactions
+                .Where(t => t.AccountId == accountId)
+                .OrderByDescending(t => t.TrDate)
+                .ToListAsync();
         }
     }
 }

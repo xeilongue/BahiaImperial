@@ -8,6 +8,6 @@ namespace BahiaImperial_API.Repositories.TransactionRepo
         Task Create(BankTransaction bankTransaction);
         Task Update(BankTransaction bankTransaction);
         Task Delete(BankTransaction bankTransaction);
-        //Task<BankTransaction> GetByBank(String TransactionByBank);
+        Task<IEnumerable<BankTransaction>> GetByAccountId(int accountId);
     }
 }
