@@ -6,7 +6,7 @@ namespace BahiaImperial_API.DTOs
     {
         public int Id { get; set; }
         public decimal Balance { get; set; } = 0;
-        public decimal LoanLimit { get; set; }
+        public decimal LoanLimit { get; set; } = 400;
         public decimal LoanDebt { get; set; }
         public AccountType Type { get; set; }
 

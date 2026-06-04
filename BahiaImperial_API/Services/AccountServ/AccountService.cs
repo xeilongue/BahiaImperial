@@ -29,7 +29,7 @@ namespace BahiaImperial_API.Services.AccountServ
                     {
                         Cpf_Cnpj = accountDTO.Cpf_Cnpj, // Vínculo necessário
                         Balance = 0,
-                        LoanLimit = accountDTO.LoanLimit,
+                        LoanLimit = accountDTO.LoanLimit * 4,
                         Type = AccountType.business
                     };
                     break;
