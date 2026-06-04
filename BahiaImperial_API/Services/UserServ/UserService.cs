@@ -13,10 +13,10 @@ namespace BahiaImperial_API.Services.UserServ
             _repository = repository;
         }
 
-        public async Task<IEnumerable<User>> ListarTodos() =>
-            await _repository.ListarTodos();
+        public async Task<IEnumerable<User>> ListAll() =>
+            await _repository.ListAll();
 
-        public async Task Criar(UserDTO userDTO)
+        public async Task Create(UserDTO userDTO)
         {
             if (userDTO.Cpf_Cnpj == null || userDTO.Cpf_Cnpj.Trim() == "")
             {
@@ -54,7 +54,27 @@ namespace BahiaImperial_API.Services.UserServ
                 Password = userDTO.Password,
             };
 
-            await _repository.Adicionar(user);
+            await _repository.Create(user);
+        }
+
+        public async Task Delete(String userId)
+        {
+            User user = await _repository.GetById(userId);
+
+            if (user != null) await _repository.Delete(user);
+            else throw new Exception("Usuário não encontrado");
+        }
+
+        public async Task Update(UserDTO userDTO)
+        {
+            User user = await _repository.GetById(userDTO.Cpf_Cnpj);
+
+            if (user != null)
+            {
+                user.Password = userDTO.Password;
+                await _repository.Delete(user);
+            }
+            else throw new Exception("Usuário não encontrado");
         }
 
         public async Task<UserDTO> GetById(String userId)

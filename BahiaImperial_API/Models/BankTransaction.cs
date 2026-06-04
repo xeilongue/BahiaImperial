@@ -3,10 +3,7 @@
     public enum TransactionType
     {
         Deposit = 0,
-        LoanRequest = 1,
-        LoanRepayment = 2,
-        Transfer = 3,
-        Withdraw = 4
+        Withdraw = 1
     }
     public class BankTransaction
     {
@@ -22,12 +19,5 @@
 
         public BankTransaction() { }
 
-        //public Transaction (TransactionType Type, decimal Amount, int AccountId)
-        //{
-        //    this.Type = Type;
-        //    this.Amount = Amount;
-
-        //    this.AccountId = AccountId;
-        //}
     }
 }

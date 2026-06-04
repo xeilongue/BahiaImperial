@@ -30,7 +30,6 @@ namespace BahiaImperial_API.Data.Configurations
                 .HasColumnType("timestamp")
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasPrecision(3)
                 .IsRequired();
         }
     }

@@ -1,0 +1,80 @@
+/* CreateAccountModal.css - VERSÃO ULTRA OTIMIZADA */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Removemos o blur(8px) pesado e escurecemos um pouco mais o fundo (de 0.6 para 0.75) */
+    background-color: rgba(15, 23, 42, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    animation: fadeIn 0.15s ease-out;
+    /* Hardware Acceleration: Força o navegador a usar a GPU para rodar liso */
+    will-change: opacity;
+}
+
+.modal-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    max-width: 480px;
+    width: 90%;
+    /* Encurtamos sutilmente o tempo da animação (de 0.3s para 0.25s) para parecer mais instantâneo */
+    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Hardware Acceleration */
+    will-change: transform, opacity;
+}
+
+.option-card {
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    width: 100%;
+}
+
+    .option-card:hover {
+        border-color: #4f46e5;
+        background-color: rgba(79, 70, 229, 0.02);
+        transform: translateY(-1px); /* Reduzido de -2px para evitar saltos bruscos */
+    }
+
+    .option-card h6 {
+        color: #0f172a;
+        margin-bottom: 0.25rem;
+    }
+
+    .option-card p {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+/* Animações otimizadas (com tempos ligeiramente menores) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(12px);
+        opacity: 0;
+    }
+    /* Começa mais perto (12px em vez de 20px) para exigir menos deslocamento visual */
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

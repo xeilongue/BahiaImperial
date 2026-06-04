@@ -37,6 +37,7 @@ namespace BahiaImperial_API.Controllers
                     {
                         Subject = new ClaimsIdentity(new[]
                         {
+                            new Claim(ClaimTypes.NameIdentifier, userlogin.Cpf_Cnpj),
                             new Claim(ClaimTypes.Name, userlogin.Cpf_Cnpj),
                             new Claim(ClaimTypes.Role, "Administrador")
                         }),

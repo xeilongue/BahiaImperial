@@ -11,13 +11,15 @@ using BahiaImperial_API.Repositories.AccountRepo;
 using BahiaImperial_API.Repositories.ClientRepo;
 using BahiaImperial_API.Repositories.TransactionRepo;
 using BahiaImperial_API.Repositories.UserRepo;
-using Microsoft.EntityFrameworkCore;
+using BahiaImperial_API.Services.AccountServ;
+using BahiaImperial_API.Services.ClientServ;
+using BahiaImperial_API.Services.TransactionServ;
+using BahiaImperial_API.Services.UserServ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using BahiaImperial_API.Services.UserServ;
-using BahiaImperial_API.Services.ClientServ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,13 +38,13 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connecti
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IBankTransactionRepository, BankTransactionRepository>();
 
 // REGISTRO DO SERVICES
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClientService, ClientService>();
-//builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
-//builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 // CONFIGURAÇÃO DO JWT
 var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);

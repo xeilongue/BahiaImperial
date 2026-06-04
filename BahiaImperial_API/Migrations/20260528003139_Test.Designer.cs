@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BahiaImperial_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260512124356_AlterPasswordType2")]
-    partial class AlterPasswordType2
+    [Migration("20260528003139_Test")]
+    partial class Test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,12 @@ namespace BahiaImperial_API.Migrations
 
                     b.Property<string>("Cpf_Cnpj")
                         .HasColumnType("varchar(14)");
+
+                    b.Property<decimal>("LoanDebt")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(15, 2)
+                        .HasColumnType("decimal(15,2)")
+                        .HasDefaultValue(0m);
 
                     b.Property<decimal>("LoanLimit")
                         .ValueGeneratedOnAdd()
@@ -83,7 +89,6 @@ namespace BahiaImperial_API.Migrations
 
                     b.Property<DateTime>("TrDate")
                         .ValueGeneratedOnAdd()
-                        .HasPrecision(3)
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
@@ -104,6 +109,9 @@ namespace BahiaImperial_API.Migrations
                     b.Property<string>("Cpf_Cnpj")
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
+
+                    b.Property<DateOnly>("InceptionDate")
+                        .HasColumnType("date");
 
                     b.Property<decimal>("MonthlyIncome")
                         .HasPrecision(15, 2)

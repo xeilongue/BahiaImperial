@@ -8,7 +8,8 @@ namespace BahiaImperial_API.Services.AccountServ
 {
     public interface IAccountService
     {
-        Task<IEnumerable<Account>> ListarTodos();
-        Task Criar(AccountDTO accountDTO);
+        Task<IEnumerable<Account>> ListAll();
+        Task Create(AccountDTO accountDTO);
+        Task<List<AccountDTO>> GetAccountByUserId(string userId);
     }
 }

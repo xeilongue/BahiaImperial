@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BahiaImperial_API.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class Test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,8 @@ namespace BahiaImperial_API.Migrations
                 {
                     Cpf_Cnpj = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Password = table.Column<int>(type: "int", maxLength: 20, nullable: false)
+                    Password = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -33,12 +34,15 @@ namespace BahiaImperial_API.Migrations
                 name: "accounts",
                 columns: table => new
                 {
+                    Type = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Type = table.Column<int>(type: "int", maxLength: 8, nullable: false),
-                    Balance = table.Column<double>(type: "double", precision: 15, scale: 2, nullable: false),
-                    LoanLimit = table.Column<double>(type: "double", precision: 15, scale: 2, nullable: false),
-                    Cpf_Cnpj = table.Column<string>(type: "varchar(14)", nullable: false)
+                    Balance = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false, defaultValue: 0m),
+                    LoanLimit = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    LoanDebt = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false, defaultValue: 0m),
+                    Cpf_Cnpj = table.Column<string>(type: "varchar(14)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -48,8 +52,7 @@ namespace BahiaImperial_API.Migrations
                         name: "FK_accounts_users_Cpf_Cnpj",
                         column: x => x.Cpf_Cnpj,
                         principalTable: "users",
-                        principalColumn: "Cpf_Cnpj",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Cpf_Cnpj");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -61,7 +64,8 @@ namespace BahiaImperial_API.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    MonthlyIncome = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false)
+                    MonthlyIncome = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false),
+                    InceptionDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,38 +80,15 @@ namespace BahiaImperial_API.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "loans",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Initial_Loan = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false),
-                    Current_Loan = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false),
-                    Loan_Status = table.Column<int>(type: "int", maxLength: 7, nullable: false),
-                    Created_At = table.Column<DateTime>(type: "timestamp(3)", precision: 3, nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_loans", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_loans_accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "transactions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Type = table.Column<int>(type: "int", maxLength: 14, nullable: false),
+                    Type = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Amount = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false),
-                    TrDate = table.Column<DateTime>(type: "timestamp(3)", precision: 3, nullable: false),
+                    TrDate = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     AccountId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -128,11 +109,6 @@ namespace BahiaImperial_API.Migrations
                 column: "Cpf_Cnpj");
 
             migrationBuilder.CreateIndex(
-                name: "IX_loans_AccountId",
-                table: "loans",
-                column: "AccountId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_transactions_AccountId",
                 table: "transactions",
                 column: "AccountId");
@@ -143,9 +119,6 @@ namespace BahiaImperial_API.Migrations
         {
             migrationBuilder.DropTable(
                 name: "clients");
-
-            migrationBuilder.DropTable(
-                name: "loans");
 
             migrationBuilder.DropTable(
                 name: "transactions");

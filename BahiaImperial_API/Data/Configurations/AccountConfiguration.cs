@@ -25,7 +25,11 @@ namespace BahiaImperial_API.Data.Configurations
                 .ValueGeneratedOnAdd();
 
             account.Property(a => a.LoanLimit)
+                .HasPrecision(15, 2);
+
+            account.Property(a => a.LoanDebt)
                 .HasPrecision(15, 2)
+                .HasDefaultValue(0)
                 .ValueGeneratedOnAdd();
 
             account.Property(a => a.Type)
@@ -35,17 +39,13 @@ namespace BahiaImperial_API.Data.Configurations
                 .HasColumnOrder(2);
 
             account.HasDiscriminator(a => a.Type)
-                .HasValue<Business>(Account.AccountType.business)
-                .HasValue<Checking>(Account.AccountType.checking)
-                .HasValue<Saving>(Account.AccountType.saving);
+                .HasValue<Business>(AccountType.business)
+                .HasValue<Checking>(AccountType.checking)
+                .HasValue<Saving>(AccountType.saving);
 
             account.HasMany(a => a.Transactions)
                 .WithOne()
                 .HasForeignKey(t => t.AccountId);
-
-            //account.HasMany(a => a.Loans)
-            //    .WithOne()
-            //    .HasForeignKey(l => l.AccountId);
 
         }
     }

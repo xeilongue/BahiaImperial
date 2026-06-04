@@ -1,3 +1,7 @@
 <Solution>
   <Project Path="BahiaImperial_API/BahiaImperial_API.csproj" />
+  <Project Path="bahiaimperial_client/bahiaimperial_client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
 </Solution>

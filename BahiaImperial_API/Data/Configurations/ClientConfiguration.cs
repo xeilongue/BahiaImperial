@@ -24,6 +24,10 @@ namespace BahiaImperial_API.Data.Configurations
             client.Property(c => c.MonthlyIncome)
                 .HasPrecision(15, 2)
                 .IsRequired();
+
+            client.Property(c => c.InceptionDate)
+                .HasColumnType("date")
+                .IsRequired();
         }
     }
 }

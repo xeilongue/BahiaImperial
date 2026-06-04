@@ -13,15 +13,32 @@ namespace BahiaImperial_API.Repositories.ClientRepo
             _context = context;
         }
 
-        public async Task<IEnumerable<Client>> ListarTodos()
+        public async Task<IEnumerable<Client>> ListAll()
         {
             return await _context.clients.ToListAsync();
         }
 
-        public async Task Adicionar(Client client)
+        public async Task Create(Client client)
         {
             await _context.clients.AddAsync(client);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(Client client)
+        {
+            _context.clients.Update(client);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(Client client)
+        {
+            _context.clients.Remove(client);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Client> GetById(String clientId)
+        {
+            return await _context.clients.FirstOrDefaultAsync(c => c.Cpf_Cnpj == clientId);
         }
     }
 }

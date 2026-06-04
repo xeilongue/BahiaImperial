@@ -1,14 +1,15 @@
-﻿using BahiaImperial_API.DTOs;
+﻿// ITransactionService.cs
+using BahiaImperial_API.DTOs;
 using BahiaImperial_API.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BahiaImperial_API.Services.TransactionServ
 {
     public interface ITransactionService
     {
-        Task<IEnumerable<BankTransaction>> ListarTodos();
-        Task Criar(TransactionDTO transactionDTO);
+        Task<IEnumerable<BankTransaction>> ListAll();
+        Task Create(TransactionDTO transactionDTO);
+        Task Deposit(int accountId, decimal amount);
+        Task Withdraw(int accountId, decimal amount);
+        Task<IEnumerable<BankTransaction>> GetByAccountId(int accountId);
     }
 }

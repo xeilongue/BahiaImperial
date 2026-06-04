@@ -14,22 +14,43 @@ namespace BahiaImperial_API.Services.UserServ
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Client>> ListarTodos() =>
-            await _repository.ListarTodos();
+        public async Task<IEnumerable<Client>> ListAll() =>
+            await _repository.ListAll();
 
-        public async Task Criar(ClientDTO clientDTO)
+        public async Task Create(ClientDTO clientDTO)
         {
-            //if (userDTO.AnoPublicado > DateTime.Now.Year)
-            //    throw new Exception("Não é possivel publicar livros do futuro");
+            if (clientDTO.InceptionDate > DateOnly.FromDateTime(DateTime.Now) ||
+                clientDTO.InceptionDate < new DateOnly(1906, 01, 01)
+            )
+                throw new Exception("Data de nascimento inválida.");
+
+            if (clientDTO.InceptionDate > DateOnly.FromDateTime((DateTime.Now).AddYears(-18)))
+                throw new Exception("Você deve ser maior de idade para abrir uma conta.");
+
+            //if (clientDTO.MonthlyIncome <= 0)
+            //    throw new Exception("Salário inválido.");
 
             var client = new Client
             {
                 Cpf_Cnpj = clientDTO.Cpf_Cnpj,
                 Name = clientDTO.Name,
                 MonthlyIncome = clientDTO.MonthlyIncome,
+                InceptionDate = clientDTO.InceptionDate
             };
 
-            await _repository.Adicionar(client);
+            await _repository.Create(client);
+        }
+
+        public async Task<Client> GetById(String clientId)
+        {
+            Client client = await _repository.GetById(clientId);
+
+            if (client != null)
+            {
+                return client;
+            }
+
+            throw new Exception("Cadastro não encontrado.");
         }
     }
 }
